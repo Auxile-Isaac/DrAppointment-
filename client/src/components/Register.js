@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import avatar from '../assets/profile.avif'
 import {Toaster} from 'react-hot-toast'
 import {useFormik} from 'formik'
-import {passwordValidate} from '../helper/validate'
+import {registerValidate} from '../helper/validate'
 import convertToBase64 from '../helper/convert'
 
 import styles from '../styles/Username.module.css'
@@ -18,7 +18,7 @@ export default function Register() {
       username: '',
       password: ''
     },
-    validate: passwordValidate,
+    validate: registerValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values =>{
@@ -57,7 +57,7 @@ export default function Register() {
             <div className='textbox flex flex-col items-center gap-6'>
               <input {...formik.getFieldProps('email')} className={styles.textbox} type='text' placeholder='Email*'/>
               <input {...formik.getFieldProps('username')} className={styles.textbox} type='text' placeholder='Username*'/>
-              <input {...formik.getFieldProps('password')} className={styles.textbox} type='text' placeholder='Password*'/>
+              <input {...formik.getFieldProps('password')} className={styles.textbox} type='password' placeholder='Password*'/>
               <button className={styles.btn} type='submit'>Register</button>
             </div>
 

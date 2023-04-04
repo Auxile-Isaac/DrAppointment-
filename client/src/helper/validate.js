@@ -23,10 +23,21 @@ export async function resetPasswordValidation(values){
     }
 }
 
+/** validate Register page username**/
+export async function registerValidate(values){
+    const errors = usernameVerify({}, values);
+    passwordVerify(errors, values)
+    emailVerify(errors, values)
+
+    return errors
+}
+
+/**************************************************** */
+
 /** validate Password **/
 function passwordVerify(errors = {}, values){
 
-    const specialChars = /[\W_]/g
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if(!values.password){
         errors.password = toast.error("Password Required..!");
     }else if(values.password.includes(" ")){
@@ -46,6 +57,19 @@ function usernameVerify(errors = {}, values){
         errors.username = toast.error("Username Required..!")
     }else if(values.username.includes(" ")){
         errors.username = toast.error("Invarid Username..!")
+    }
+
+    return errors
+}
+
+/** validate email **/
+function emailVerify(errors = {}, values){
+    if(!values.email){
+        errors.email = toast.error("Email Required..!")
+    }else if(values.email.includes(" ")){
+        errors.email = toast.error("Wrong Email..!")
+    }else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
+        errors.email = toast.error("Invalide Email address..!")
     }
 
     return errors
