@@ -32,6 +32,13 @@ export async function registerValidate(values){
     return errors
 }
 
+/** validate Profile page username **/
+export async function profileValidate(values){
+    const errors = emailVerify({}, values);
+    return errors;
+
+}
+
 /**************************************************** */
 
 /** validate Password **/

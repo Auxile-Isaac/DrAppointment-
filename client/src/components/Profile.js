@@ -3,22 +3,25 @@ import {Link} from 'react-router-dom'
 import avatar from '../assets/profile.avif'
 import {Toaster} from 'react-hot-toast'
 import {useFormik} from 'formik'
-import {registerValidate} from '../helper/validate'
+import {profileValidate} from '../helper/validate'
 import convertToBase64 from '../helper/convert'
 
 import styles from '../styles/Username.module.css'
+import extend from '../styles/Profile.module.css'
 
-export default function Register() {
+export default function Profile() {
 
   const [file, setFile] = useState()
 
   const formik = useFormik({
     initialValues: {
+      firstname:'',
+      lastname:'',
       email:'',
-      username: '',
-      password: ''
+      mobile: '',
+      address: ''
     },
-    validate: registerValidate,
+    validate: profileValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values =>{
@@ -37,32 +40,41 @@ export default function Register() {
     <div className="container mx-auto">
       <Toaster position='top-center' reverseOrder={false}></Toaster>
       <div className='flex justify-center items-center h-screen'>
-        <div className={styles.glass} styles={{width: "45%"}}>
+        <div className={`${styles.glass} ${extend.glass}`} styles={{width: "45%"}}>
 
           <div className='title flex flex-col items-center'>
-            <h4 className='text-5xl font-bold'>Register</h4>
+            <h4 className='text-5xl font-bold'>Profile</h4>
             <span className='py-4 text-xl w-2/3 text-center text-gray-500'>
-              Happy to have you!
+              You can update the details.
             </span>
           </div>
 
           <form className='py-1' onSubmit={formik.handleSubmit}>
             <div className='profile flex justify-center px-4'>
               <label htmlFor="profile">
-                <img src={file || avatar} className={styles.profile_img} alt='avatar'/>
+                <img src={file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt='avatar'/>
               </label>
               <input onChange={onUpload} type="file" id="profile" name="profile"/>
             </div>
 
             <div className='textbox flex flex-col items-center gap-6'>
-              <input {...formik.getFieldProps('email')} className={styles.textbox} type='text' placeholder='Email*'/>
-              <input {...formik.getFieldProps('username')} className={styles.textbox} type='text' placeholder='Username*'/>
-              <input {...formik.getFieldProps('password')} className={styles.textbox} type='password' placeholder='Password*'/>
-              <button className={styles.btn} type='submit'>Register</button>
+              <div className='name flex w-3/4 gap-10'>
+                <input {...formik.getFieldProps('firstname')} className={`${styles.textbox} ${extend.textbox}`} type='text' placeholder='Firstname'/>
+                <input {...formik.getFieldProps('lastname')} className={`${styles.textbox} ${extend.textbox}`} type='text' placeholder='Lastname'/>
+              </div>
+
+              <div className='name flex w-3/4 gap-10'>
+                <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} ${extend.textbox}`} type='text' placeholder='Mobile Number'/>
+                <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`} type='text' placeholder='Email*'/>
+              </div>
+
+                <input {...formik.getFieldProps('address')} className={`${styles.textbox} ${extend.textbox}`} type='text' placeholder='address Number'/>
+                <button className={styles.btn} type='submit'>Register</button>
+                         
             </div>
 
             <div className='text-center py-4'>
-              <span className='text-gray-500'>Already registered? <Link className='text-red-500' to='/'>Login Now</Link></span>
+              <span className='text-gray-500'>Come back later! <Link className='text-red-500' to='/'>Logout</Link></span>
             </div>
           </form>
         </div>
